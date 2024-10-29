@@ -89,10 +89,24 @@ class BSQLI:
                         if success and status_code and response_time >= 10:
                             self.vulnerabilities_found += 1
                             self.vulnerable_urls.append(url_with_payload)
-                            print(f"{Color.GREEN}✓ Vulnerable URL: {url_with_payload}{Color.RESET}")
+                            print(f"{Color.BOLD}{Color.GREEN}[✓] Vulnerability Detected!{Color.RESET}")
+                            print(f"{Color.GREEN}{'-'*60}")
+                            print(f"{Color.GREEN}URL: {Color.RESET}{url_with_payload}")
+                            print(f"{Color.GREEN}Status Code: {Color.RESET}{status_code}")
+                            print(f"{Color.GREEN}Response Time: {Color.RESET}{response_time} seconds")
+                            print(f"{Color.GREEN}Payload: {Color.RESET}{url_with_payload}")
+                            print(f"{Color.GREEN}{'-'*60}{Color.RESET}\n")
+                        
                         else:
                             if self.verbose:
-                                print(f"{Color.RED}✗ Not Vulnerable: {url_with_payload}{Color.RESET}")
+                                print(f"{Color.BOLD}{Color.RED}[✗] No Vulnerability Detected{Color.RESET}")
+                                print(f"{Color.RED}{'-'*60}")
+                                print(f"{Color.RED}URL: {Color.RESET}{url_with_payload}")
+                                print(f"{Color.RED}Status Code: {Color.RESET}{status_code if status_code else 'N/A'}")
+                                print(f"{Color.RED}Response Time: {Color.RESET}{response_time if response_time else 'N/A'} seconds")
+                                print(f"{Color.RED}Payload Tested: {Color.RESET}{url_with_payload}")
+                                print(f"{Color.RED}{'-'*60}{Color.RESET}\n")
+                            
 
         except KeyboardInterrupt:
             print(f"{Color.YELLOW}Scan interrupted by user.{Color.RESET}")
