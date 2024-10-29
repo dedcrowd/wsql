@@ -75,10 +75,23 @@ class BSQLI:
                         if success and status_code and response_time >= 10:
                             self.vulnerabilities_found += 1
                             self.vulnerable_urls.append(url_with_payload)
-                            print(f"{Color.GREEN}✓ Vulnerable URL: {url_with_payload}{Color.RESET}")
+                            print(f"{Color.BOLD}{Color.GREEN}[✓] Vulnerable URL Detected!{Color.RESET}")
+                            print(f"{Color.GREEN}{'='*60}{Color.RESET}")
+                            print(f"{Color.GREEN}URL: {Color.RESET}{url_with_payload}")
+                            print(f"{Color.GREEN}Status Code: {Color.RESET}{status_code}")
+                            print(f"{Color.GREEN}Response Time: {Color.RESET}{response_time} seconds")
+                            print(f"{Color.GREEN}Exploit Payload: {Color.RESET}{url_with_payload}")
+                            print(f"{Color.GREEN}{'='*60}{Color.RESET}\n")
+                        
                         else:
                             if self.verbose:
-                                print(f"{Color.RED}✗ Not Vulnerable: {url_with_payload}{Color.RESET}")
+                                print(f"{Color.BOLD}{Color.RED}[✗] No Vulnerability Found{Color.RESET}")
+                                print(f"{Color.RED}{'-'*60}")
+                                print(f"{Color.RED}URL Tested: {Color.RESET}{url_with_payload}")
+                                print(f"{Color.RED}Status Code: {Color.RESET}{status_code if status_code else 'N/A'}")
+                                print(f"{Color.RED}Response Time: {Color.RESET}{response_time if response_time else 'N/A'} seconds")
+                                print(f"{Color.RED}Payload Attempted: {Color.RESET}{url_with_payload}")
+                                print(f"{Color.RED}{'-'*60}{Color.RESET}\n")
 
             else:
                 with concurrent.futures.ThreadPoolExecutor(max_workers=self.threads) as executor:
@@ -111,9 +124,11 @@ class BSQLI:
         except KeyboardInterrupt:
             print(f"{Color.YELLOW}Scan interrupted by user.{Color.RESET}")
 
-        print(f"\n{Color.BLUE}Scan Complete.{Color.RESET}")
-        print(f"{Color.YELLOW}Total Tests: {self.total_tests}{Color.RESET}")
-        print(f"{Color.GREEN}BSQLi Found: {self.vulnerabilities_found}{Color.RESET}")
+        print(f"\n{Color.BOLD}{Color.BLUE}--- SCAN COMPLETE ---{Color.RESET}\n")
+        print(f"{Color.CYAN}{'='*50}{Color.RESET}")
+        print(f"{Color.YELLOW}Total Tests Performed: {Color.RESET}{Color.BOLD}{self.total_tests}{Color.RESET}")
+        print(f"{Color.GREEN}Vulnerabilities Detected (BSQLi): {Color.RESET}{Color.BOLD}{self.vulnerabilities_found}{Color.RESET}")
+        print(f"{Color.CYAN}{'='*50}{Color.RESET}\n")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='BSQLI Scanner')
